@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fb体育 · 赛事信息导航页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background: #f4f8fb;
+            color: #1e2a3a;
+            line-height: 1.6;
+            padding: 0 16px 40px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部导航 */
+        .nav {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 18px 0 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #d8e4ed;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-brand span {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #116b5e;
+            letter-spacing: 0.3px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+            padding: 8px 0 4px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1e3d4a;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 4px 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s, color 0.2s;
+        }
+        .nav-links a:hover {
+            border-bottom-color: #1d8d7a;
+            color: #0f5f51;
+        }
+        .nav-links a.active {
+            border-bottom-color: #1d8d7a;
+            color: #0f5f51;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            flex: 1;
+        }
+
+        /* Hero 区 */
+        .hero {
+            padding: 40px 0 32px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            color: #0f3d3a;
+            letter-spacing: -0.3px;
+            margin-bottom: 12px;
+        }
+        .hero p {
+            max-width: 720px;
+            margin: 0 auto;
+            color: #2c4e5a;
+            font-size: 1.05rem;
+            background: #eaf3f0;
+            display: inline-block;
+            padding: 8px 22px;
+            border-radius: 40px;
+            box-shadow: 0 2px 6px rgba(0, 40, 40, 0.04);
+        }
+
+        /* 卡片网格 —— 三个场景模块 */
+        .scene-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin: 18px 0 36px;
+        }
+        .scene-card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 20px 32px;
+            box-shadow: 0 6px 18px rgba(0, 50, 50, 0.05);
+            transition: transform 0.15s, box-shadow 0.2s;
+            border: 1px solid #d9e9e5;
+            display: flex;
+            flex-direction: column;
+        }
+        .scene-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 70, 70, 0.07);
+            border-color: #b2d4cd;
+        }
+        .scene-icon {
+            width: 40px;
+            height: 40px;
+            background: #dff0ec;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            color: #116b5e;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+        .scene-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0a3c36;
+            margin-bottom: 10px;
+        }
+        .scene-card p {
+            color: #2f4b52;
+            font-size: 0.95rem;
+            flex: 1;
+            margin-bottom: 16px;
+        }
+        .scene-tag {
+            align-self: flex-start;
+            background: #e5f2ef;
+            color: #0f5f51;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        /* 说明区块 */
+        .faq-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px 28px;
+            background: #ffffffea;
+            border-radius: 28px;
+            padding: 28px 32px;
+            margin: 18px 0 30px;
+            border: 1px solid #cde0db;
+            box-shadow: 0 2px 12px rgba(0, 40, 40, 0.03);
+        }
+        .faq-item {
+            flex: 1 1 200px;
+            min-width: 160px;
+        }
+        .faq-item .q {
+            font-weight: 600;
+            color: #0d4c42;
+            margin-bottom: 4px;
+            font-size: 0.98rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .faq-item .q::before {
+            content: "▹";
+            color: #1d8d7a;
+            font-size: 1.1rem;
+        }
+        .faq-item .a {
+            color: #2e4b52;
+            font-size: 0.9rem;
+            padding-left: 18px;
+        }
+
+        /* 内嵌链接 */
+        .inline-link {
+            color: #116b5e;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid #8ac2b7;
+            transition: border-color 0.2s, background 0.15s;
+            padding: 0 2px;
+        }
+        .inline-link:hover {
+            border-bottom-color: #116b5e;
+            background: #dff0ec;
+            border-radius: 4px;
+        }
+
+        .extra-note {
+            background: #ecf6f3;
+            padding: 18px 26px;
+            border-radius: 60px;
+            margin: 8px 0 24px;
+            display: inline-block;
+            font-size: 0.95rem;
+            color: #17453f;
+            border: 1px solid #bfdbd3;
+        }
+
+        /* 底部 */
+        .footer-note {
+            margin-top: 24px;
+            padding: 18px 0 6px;
+            text-align: center;
+            border-top: 1px solid #d3e3de;
+            color: #3b5b60;
+            font-size: 0.85rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 820px) {
+            .scene-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .nav {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 18px;
+                flex-wrap: wrap;
+            }
+        }
+        @media (max-width: 540px) {
+            .scene-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .faq-summary {
+                padding: 22px 18px;
+            }
+            .hero p {
+                font-size: 0.95rem;
+                padding: 6px 16px;
+            }
+            .extra-note {
+                padding: 14px 20px;
+                border-radius: 40px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-brand">
+        <span>◈ fb体育</span>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#" class="active">日常</a></li>
+        <li><a href="#">对照</a></li>
+        <li><a href="#">延伸</a></li>
+        <li><a href="#">说明</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <!-- hero -->
+    <div class="hero">
+        <h1>赛事信息 · 日常查询与对照</h1>
+        <p>聚焦常见联赛、杯赛与数据整理，方便随时翻阅</p>
+    </div>
+
+    <!-- 三种场景卡片 -->
+    <div class="scene-grid">
+        <div class="scene-card">
+            <div class="scene-icon">⚽</div>
+            <h3>赛事速查</h3>
+            <p>日常需要确认比赛时间、对阵或近期走势，可以直接在综合信息页里快速定位。许多用户习惯把 <a href="https://init-fbsport.com" class="inline-link">fb体育</a> 作为对照基准，配合手边资料一起看。</p>
+            <span class="scene-tag">对照常用</span>
+        </div>
+        <div class="scene-card">
+            <div class="scene-icon">📋</div>
+            <h3>数据对照</h3>
+            <p>看同一轮联赛的积分变化、杯赛晋级形势时，把不同来源的数据并列观察会更清楚。延伸阅读里提到的统计口径，可以结合平台上的条目逐项比对。</p>
+            <span class="scene-tag">延伸阅读</span>
+        </div>
+        <div class="scene-card">
+            <div class="scene-icon">🔎</div>
+            <h3>话题整理</h3>
+            <p>围绕某支球队或某个赛季的讨论，常常需要翻看历史对阵与基础记录。把日常浏览中分散的信息收集起来，搭配页面里的栏目做索引，能省去不少重复查找的时间。</p>
+            <span class="scene-tag">日常索引</span>
+        </div>
+    </div>
+
+    <!-- 常见说明（FAQ摘要） -->
+    <div class="faq-summary">
+        <div class="faq-item">
+            <div class="q">内容覆盖哪些范围？</div>
+            <div class="a">主要整理欧洲、南美部分联赛及国际杯赛的基础信息，包括赛程、排名与基础统计，不包含实时博彩数据或预测。</div>
+        </div>
+        <div class="faq-item">
+            <div class="q">数据更新节奏？</div>
+            <div class="a">每轮比赛结束后一般 12 小时内完成基础更新，重大杯赛淘汰阶段会适当加快。建议以官方赛历为准，平台页面可作为辅助参考。</div>
+        </div>
+        <div class="faq-item">
+            <div class="q">怎样使用更有效？</div>
+            <div class="a">先确定想查的联赛或赛季，然后在站内搜索关键词；如果习惯对照多页信息，可以把 <a href="https://init-fbsport.com" class="inline-link">fb体育</a> 固定标签页，方便来回切换。</div>
+        </div>
+    </div>
+
+    <!-- 延伸提示 -->
+    <div class="extra-note">
+        ⚡ 延伸阅读：部分用户会在看集锦或阅读赛后报道时，把赛程页作为时间线基准。常见做法是把页面加入书签，再配合两三个数据源交叉参考。
+    </div>
+
+    <!-- 简短说明段落，嵌入第二个链接 -->
+    <p style="color: #2a4b4f; max-width: 740px; background: #f3faf8; padding: 10px 22px; border-radius: 40px; margin: 8px 0 0;">
+        无论日常查阅还是做简单对照，<a href="https://init-fbsport.com" class="inline-link">fb体育</a> 都能提供一个相对固定的信息起点。页面结构以卡片和条目为主，适合在手机和电脑上快速浏览。
+    </p>
+
+    <div class="footer-note">
+        本页为信息整理与导航用途 · 内容仅供参考
+    </div>
+
+</div>
+
+</body>
+</html>
